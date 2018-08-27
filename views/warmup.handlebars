@@ -1,0 +1,43 @@
+<div class='box-chat'>
+  <div class='box-title'>
+    <div class='row'>
+      <div class='messages' style="width: 100px">
+        <h3 id='cat'>Cat Room!</h3>
+        {{#each messages as |message|}}
+          <h5>{{message.author}}</h5>
+          <p>{{message.body}}</p>
+          {{/each}}
+      </div>
+    </div>
+
+<div class='row'>
+      <div class='new-post' style="width: 200px" >
+        <form action='/' method='post'>
+          <fieldset>
+            <legend>New Posts</legend>
+            <textarea id="new-post" name="post" placeholder="write something in me." maxlength="300" wrap='hard'></textarea>
+            <!--<input type='text' id="post" name="post" placeholder='what do you want to do?' /> -->
+            <input type="submit" value='submit your post!' method='post' />
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+
+<script>
+  let socket = io.connect('http://localhost:4291')
+  socket.on('new post', function(data){
+    //let $tr = $(#cat)
+    //$tr.find('.visits').html(data.count)
+    console.log(data)
+    var newPost = `<h5>anon</h5> <p>${data.body}</p>`
+    var firstPost = $('h5').first()
+    //console.log(firstPost)
+    //$('h5').first().prepend(newPost)
+    $(newPost).insertBefore(firstPost)
+  });
+</script>
